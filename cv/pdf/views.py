@@ -3,8 +3,39 @@ import pdfkit
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.template import loader
+from .forms import ProfileForm
+from django.shortcuts import redirect
+from django.core.mail import send_mail
+from django.contrib import messages
+from django.conf import settings
 
 
+def share_cv_email(request, profile_id):
+    profile = get_object_or_404(Profile, id=profile_id)
+    recipient_email = request.POST.get('email')
+
+    if recipient_email:
+        subject = f"{profile.name}'s CV"
+
+        # Проверяем, есть ли загруженное изображение
+        if profile.profile_picture:
+            profile_picture_url = request.build_absolute_uri(profile.profile_picture.url)
+        else:
+            profile_picture_url = request.build_absolute_uri('/')  # Ссылка на главную страницу или другой URL
+
+        message = f"Check out {profile.name}'s CV at {profile_picture_url}"
+        sender_email = settings.EMAIL_HOST_USER
+
+        try:
+            send_mail(subject, message, sender_email, [recipient_email])
+            messages.success(request, "CV shared successfully via email.")
+        except Exception as e:
+            messages.error(request, f"Error sending email: {e}")
+
+    else:
+        messages.error(request, "Please provide a valid email.")
+
+    return redirect('list_profiles')
 def generate_pdf(request, id):
     user_profile = get_object_or_404(Profile, pk=id)
     template = loader.get_template('pdf/resume.html')
@@ -37,21 +68,12 @@ def resume(request, id):
 
 def accept(request):
     if request.method == "POST":
-        name = request.POST.get("name", "")
-        email = request.POST.get("email", "")
-        phone = request.POST.get("phone", "")
-        summary = request.POST.get("summary", "")
-        degree = request.POST.get("degree", "")
-        school = request.POST.get("school", "")
-        university = request.POST.get("university", "")
-        previous_work = request.POST.get("previous_work", "")
-        skills = request.POST.get("skills", "")
-        employed = request.POST.get("employed", "") == "on"
+        form = ProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('list_profiles')
+    else:
+        form = ProfileForm()
 
-        profile = Profile(
-            name=name, email=email, phone=phone, summary=summary,
-            degree=degree, school=school, university=university,
-            previous_work=previous_work, skills=skills, employed=employed
-        )
-        profile.save()
-    return render(request, 'pdf/accept.html')
+    return render(request, 'pdf/accept.html', {'form': form})
+

@@ -4,66 +4,98 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" crossorigin="anonymous">
     <title>CV Generator</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" crossorigin="anonymous">
 </head>
 <body>
     <div class="container">
-        <div class="row m-5">
-            <div class="col-md-12">
+        <div class="row mt-5">
+            <div class="col-md-12 text-center">
                 <h1>CV Generator</h1>
+                <p class="lead">Fill out the form below to create your CV</p>
                 <hr>
             </div>
         </div>
-        <div class="row m-5">
-            <div class="col-md-7">
-                <form method="POST" action="{% url 'accept' %}">
+
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
+
+                    <!-- Имя -->
                     <div class="form-group">
-                        <label>Name</label>
-                        <input type="text" class="form-control" name="name" placeholder="Eg. John Doe" required>
+                        <label for="name">Full Name</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="E.g., John Doe" required>
                     </div>
+
+                    <!-- Email -->
                     <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" class="form-control" name="email" placeholder="Eg. demo@gmail.com" required>
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id = "email" name="email" placeholder="E.g., john.doe@example.com" required>
                     </div>
+
+                    <!-- Телефон -->
                     <div class="form-group">
-                        <label>Phone</label>
-                        <input type="text" class="form-control" name="phone" placeholder="Eg. 9999999999" required>
+                        <label for="phone">Phone</label>
+                        <input type="text" class="form-control" id="phone" name="phone" placeholder="E.g., +1234567890" required>
                     </div>
+
+                    <!-- Фотография -->
                     <div class="form-group">
-                        <label>Summary</label>
-                        <textarea class="form-control" name="summary" placeholder="Write something about yourself"></textarea>
+                        <label for="profile_picture">Profile Picture</label>
+                        <input type="file" class="form-control-file" id="profile_picture" name="profile_picture" accept="image/*">
                     </div>
+
+                    <!-- Описание -->
                     <div class="form-group">
-                        <label>Degree</label>
-                        <input type="text" class="form-control" name="degree" placeholder="Eg. B-Tech IT">
+                        <label for="summary">Summary</label>
+                        <textarea class="form-control" id="summary" name="summary" rows="3" placeholder="Write a short summary about yourself..."></textarea>
                     </div>
+
+                    <!-- Образование -->
                     <div class="form-group">
-                        <label>School</label>
-                        <input type="text" class="form-control" name="school" placeholder="Eg. MIT">
+                        <label for="degree">Degree</label>
+                        <input type="text" class="form-control" id="degree" name="degree" placeholder="E.g., Bachelor of Computer Science">
                     </div>
+
                     <div class="form-group">
-                        <label>University</label>
-                        <input type="text" class="form-control" name="university" placeholder="Eg. MIT">
+                        <label for="school">School</label>
+                        <input type="text" class="form-control" id="school" name="school" placeholder="E.g., High School Name">
                     </div>
+
                     <div class="form-group">
-                        <label>Previous Work</label>
-                        <textarea class="form-control" name="previous_work" placeholder="Eg. Programmer @ XYZ"></textarea>
+                        <label for="university">University</label>
+                        <input type="text" class="form-control" id="university" name="university" placeholder="E.g., MIT">
                     </div>
+
+                    <!-- Опыт работы -->
                     <div class="form-group">
-                        <label>Skills</label>
-                        <textarea class="form-control" name="skills" placeholder="Eg. Python, Django, React"></textarea>
+                        <label for="previous_work">Previous Work Experience</label>
+                        <textarea class="form-control" id="previous_work" name="previous_work" rows="3" placeholder="List your previous work experiences..."></textarea>
                     </div>
+
+                    <!-- Навыки -->
+                    <div class="form-group">
+                        <label for="skills">Skills</label>
+                        <textarea class="form-control" id="skills" name="skills" rows="3" placeholder="E.g., Python, Django, React"></textarea>
+                    </div>
+
+                    <!-- Чекбокс: Работаешь ли сейчас -->
                     <div class="form-group form-check">
-                        <input type="checkbox" class="form-check-input" name="employed" id="employed">
-                        <label class="form-check-label" for="employed">Employed?</label>
+                        <input type="checkbox" class="form-check-input" id="employed" name="employed">
+                        <label class="form-check-label" for="employed">Currently Employed</label>
                     </div>
+
+                    <!-- Кнопки -->
                     <button type="submit" class="btn btn-primary">Submit</button>
                     <a href="{% url 'list_profiles' %}" class="btn btn-secondary">View Profiles</a>
                 </form>
             </div>
         </div>
     </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

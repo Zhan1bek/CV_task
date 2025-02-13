@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ user_profile.name }} - Resume</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container mt-4">
+        <h2>{{ user_profile.name }}</h2>
+        <p><strong>Email:</strong> {{ user_profile.email }}</p>
+        <p><strong>Phone:</strong> {{ user_profile.phone }}</p>
+        <hr/>
+        <p><strong>Summary:</strong></p>
+        <p>{{ user_profile.summary }}</p>
+        <hr/>
+        <p><strong>Skills:</strong></p>
+        <p>{{ user_profile.skills }}</p>
+        <hr/>
+        <p><strong>Education:</strong></p>
+        <ul>
+            <li>Schooling: {{ user_profile.school }}</li>
+            <li>{{ user_profile.degree }} from {{ user_profile.university }}</li>
+        </ul>
+        <hr/>
+        <p><strong>Previous Work:</strong></p>
+        <p>{{ user_profile.previous_work }}</p>
+        <p><strong>Employed:</strong> {{ user_profile.employed|yesno:"Yes,No" }}</p>
+        <hr>
+        <a href="{% url 'generate_pdf' user_profile.id %}" class="btn btn-primary">Download PDF</a>
+        <a href="{% url 'list_profiles' %}" class="btn btn-secondary">Back to List</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" crossorigin="anonymous">
+    <title>CV Generator</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row m-5">
+            <div class="col-md-12">
+                <h1>CV Generator</h1>
+                <hr>
+            </div>
+        </div>
+        <div class="row m-5">
+            <div class="col-md-7">
+                <form method="POST" action="{% url 'accept' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" class="form-control" name="name" placeholder="Eg. John Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" class="form-control" name="email" placeholder="Eg. demo@gmail.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="text" class="form-control" name="phone" placeholder="Eg. 9999999999" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Summary</label>
+                        <textarea class="form-control" name="summary" placeholder="Write something about yourself"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Degree</label>
+                        <input type="text" class="form-control" name="degree" placeholder="Eg. B-Tech IT">
+                    </div>
+                    <div class="form-group">
+                        <label>School</label>
+                        <input type="text" class="form-control" name="school" placeholder="Eg. MIT">
+                    </div>
+                    <div class="form-group">
+                        <label>University</label>
+                        <input type="text" class="form-control" name="university" placeholder="Eg. MIT">
+                    </div>
+                    <div class="form-group">
+                        <label>Previous Work</label>
+                        <textarea class="form-control" name="previous_work" placeholder="Eg. Programmer @ XYZ"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Skills</label>
+                        <textarea class="form-control" name="skills" placeholder="Eg. Python, Django, React"></textarea>
+                    </div>
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" name="employed" id="employed">
+                        <label class="form-check-label" for="employed">Employed?</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <a href="{% url 'list_profiles' %}" class="btn btn-secondary">View Profiles</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

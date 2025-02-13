@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" crossorigin="anonymous">
+    <title>CV Database Profile List</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row m-5">
+            <div class="col-md-12">
+                <h2>CV Database Profile List</h2>
+            </div>
+        </div>
+        {% for profile in profiles %}
+        <div class="row mb-2">
+            <div class="col-md-6">
+                <strong>{{ profile.name }}</strong>
+            </div>
+            <div class="col-md-6">
+                <a href="{% url 'resume' profile.id %}" class="btn btn-warning">Download CV</a>
+            </div>
+        </div>
+        <hr>
+        {% empty %}
+        <p>No profiles found.</p>
+        {% endfor %}
+        <a href="{% url 'accept' %}" class="btn btn-success mt-3">Add New Profile</a>
+    </div>
+</body>
+</html>
